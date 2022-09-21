@@ -126,26 +126,26 @@ public class Thankyou extends AppCompatActivity {
         text = findViewById(R.id.textView6);
         balacnetxt = findViewById(R.id.textView14);
 
-        product = getIntent().getStringExtra("prod");
-        balance = getIntent().getDoubleExtra("balance",0.0);
+//        product = getIntent().getStringExtra("prod");
+//        balance = getIntent().getDoubleExtra("balance",0.0);
 
         w30 = new wait30();
         w30.start();
         oncreate= true;
 
 
-        if (product.equals("1")){
-            product = "Scented";
-        }
-        else {
-            product = "Unscented";
-        }
+//        if (product.equals("1")){
+//            product = "Scented";
+//        }
+//        else {
+//            product = "Unscented";
+//        }
 
 
-        Double d = balance;
-        int i = d.intValue();
+//        Double d = balance;
+//        int i = d.intValue();
 
-        balacnetxt.setText("You have "+i+" "+product+" sheets left");
+      //  balacnetxt.setText("You have "+i+" "+product+" sheets left");
 
 
 

@@ -39,6 +39,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.linkitsoft.kioskproject.Model.TransactionModel;
 import com.linkitsoft.kioskproject.Utilites.PortNVeriables;
@@ -64,6 +65,7 @@ public class SelectOption extends AppCompatActivity {
     TextView lbl1;
     TextView lbl2;
     EditText code;
+    TabLayout tablayout;
     /* private RecyclerView recyclerView;
      private List<ProductModel> productModelList;
      ProductRecycler productRecycler;*/
@@ -230,6 +232,7 @@ public class SelectOption extends AppCompatActivity {
 
         logo = findViewById(R.id.imageView2);
         proceed = findViewById(R.id.button8);
+        tablayout = findViewById(R.id.tabLayoutSelection);
         code = findViewById(R.id.editTextTextPersonName);
         serialCom = SerialCom.getInstance();
         serialCom.setSlctOptn(this);
@@ -260,39 +263,56 @@ public class SelectOption extends AppCompatActivity {
             public void onClick(View v) {
 
 
+                Toast.makeText(getApplicationContext(),"selected is "+tablayout.getSelectedTabPosition(),Toast.LENGTH_LONG).show();
 
-                if(!code.getText().toString().isEmpty())
-                {
-                    if(!chkinternet()){
-
-                        new SweetAlertDialog(SelectOption.this,SweetAlertDialog.WARNING_TYPE)
-                                .setTitleText("No internet")
-                                .setContentText("Please check your internet connection")
-                                .show();
-                    }
-                    else {
-
-                      try {
-                          proceed.setEnabled(false);
-                          pDialog = new SweetAlertDialog(SelectOption.this, SweetAlertDialog.PROGRESS_TYPE);
-                          pDialog.setTitle("Processing");
-                          pDialog.setCanceledOnTouchOutside(false);
-                          pDialog.show();
-                      }catch (Exception ex){
-
-                      }
-                        isuserpaying = true;
-
-                        checkprecode(code.getText().toString());
+                String result=tablayout.getSelectedTabPosition()==0?"1":"0";
 
 
-                    }
+                try {
+                    proceed.setEnabled(false);
+                    pDialog = new SweetAlertDialog(SelectOption.this, SweetAlertDialog.PROGRESS_TYPE);
+                    pDialog.setTitle("Dispensing Product");
+                    pDialog.setCanceledOnTouchOutside(false);
+                    pDialog.show();
+                }catch (Exception ex){
+
                 }
+                isuserpaying = true;
 
-                else
-                {
-                    new SweetAlertDialog(SelectOption.this,SweetAlertDialog.ERROR_TYPE).setTitleText("Must fill both field").show();
-                }
+                dispense(result);
+//
+//                if(!code.getText().toString().isEmpty())
+//                {
+//                    if(!chkinternet()){
+//
+//                        new SweetAlertDialog(SelectOption.this,SweetAlertDialog.WARNING_TYPE)
+//                                .setTitleText("No internet")
+//                                .setContentText("Please check your internet connection")
+//                                .show();
+//                    }
+//                    else {
+//
+//                      try {
+//                          proceed.setEnabled(false);
+//                          pDialog = new SweetAlertDialog(SelectOption.this, SweetAlertDialog.PROGRESS_TYPE);
+//                          pDialog.setTitle("Processing");
+//                          pDialog.setCanceledOnTouchOutside(false);
+//                          pDialog.show();
+//                      }catch (Exception ex){
+//
+//                      }
+//                        isuserpaying = true;
+//
+//                        checkprecode(code.getText().toString());
+//
+//
+//                    }
+//                }
+//
+//                else
+//                {
+//                    new SweetAlertDialog(SelectOption.this,SweetAlertDialog.ERROR_TYPE).setTitleText("Must fill both field").show();
+//                }
             }
         });
 
@@ -444,11 +464,7 @@ public class SelectOption extends AppCompatActivity {
 
                             Double balance = response.getDouble("amountPresent");
 
-                            Intent intent = new Intent(SelectOption.this, Thankyou.class);
-                            intent.putExtra("balance", balance);
-                            intent.putExtra("prod", type);
-                            startActivity(intent);
-                            finish();
+                            thankyouScreen(balance);
                         }
                         else {
                             proceed.setEnabled(true);
@@ -478,6 +494,19 @@ public class SelectOption extends AppCompatActivity {
 
             requestQueue.add(jsonObjectRequest);
         }
+
+    private void thankyouScreen(Double balance) {
+
+        pDialog.dismissWithAnimation();
+        isuserpaying = false;
+        proceed.setEnabled(true);
+
+        Intent intent = new Intent(SelectOption.this, Thankyou.class);
+        intent.putExtra("balance", balance);
+        intent.putExtra("prod", type);
+        startActivity(intent);
+        finish();
+    }
 
     private void openprogrsspopup() {
 
@@ -530,7 +559,8 @@ public class SelectOption extends AppCompatActivity {
             serialCom.stopMotor(m);
             pDialog.setTitle("Dispensing Product");
             pDialog.show();
-            updatetransection();
+            thankyouScreen(0.0);
+          //  updatetransection();
 
           //  code.setText("Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2);
         }
@@ -540,7 +570,8 @@ public class SelectOption extends AppCompatActivity {
             serialCom.stopMotor(m);
             pDialog.setTitle("Dispensing Product");
             pDialog.show();
-            updatetransection();
+            thankyouScreen(0.0);
+            //updatetransection();
            // code.setText("Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2);
         }
 

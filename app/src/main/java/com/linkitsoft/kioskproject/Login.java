@@ -72,6 +72,15 @@ public class Login extends AppCompatActivity {
             Intent main = new Intent(Login.this, MainActivity.class);
             startActivity(main);
             finish();
+//            Intent optinpage = new Intent(Login.this, SelectOption.class);
+//            startActivity(optinpage);
+//            finish();
+
+//            Intent intent = new Intent(Login.this, Thankyou.class);
+//            intent.putExtra("balance", 0.0);
+//            intent.putExtra("prod", "1");
+//            startActivity(intent);
+//            finish();
         }
 
 
