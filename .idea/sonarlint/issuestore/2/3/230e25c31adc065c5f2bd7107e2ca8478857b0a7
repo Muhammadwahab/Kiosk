@@ -1,0 +1,43 @@
+
+a	java:S112û"FDefine and throw a dedicated exception instead of using a generic one.(›‘ö„ÿÿÿÿÿ
+Q
+java:S1141†"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+>
+java:S1604½"(Make this anonymous inner class a lambda(Àíªj
+>
+java:S1604Ê"(Make this anonymous inner class a lambda(Àíªj
+>
+java:S1604ˆ"(Make this anonymous inner class a lambda(Àíªj
+>
+java:S1604”"(Make this anonymous inner class a lambda(Àíªj
+D
+java:S1604ƒ"(Make this anonymous inner class a lambda(Ã®­Šùÿÿÿÿ
+?
+java:S1604£"(Make this anonymous inner class a lambda(Ö‰ì‘
+D
+java:S1604œ"(Make this anonymous inner class a lambda(Íé‚–ùÿÿÿÿ
+F
+java:S5411Û"*Use the primitive boolean expression here.(×þÆçüÿÿÿÿ
+t
+java:S1845”"XRename method "showtoast" to prevent any misunderstanding/clash with method "showToast".(¾Ýô¿ûÿÿÿÿ
+V	java:S125H"<This block of commented-out lines of code should be removed.(ôà¼Œûÿÿÿÿ
+V	java:S125N"<This block of commented-out lines of code should be removed.(ôà¼Œûÿÿÿÿ
+h
+java:S3776s"RRefactor this method to reduce its Cognitive Complexity from 46 to the 15 allowed.(“–ýþ
+P
+java:S1161s":Add the "@Override" annotation above this method signature(“–ýþ
+i	java:S100Ó"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»ÆÀ†ûÿÿÿÿ
+u
+java:S2142î"^Either re-interrupt this method or rethrow the "InterruptedException" that can be caught here.(ä ¹€
+F
+java:S1874"/Remove this use of "Handler"; it is deprecated.(’Ú©Š
+p
+java:S1871’"MThis branch's code block is the same as the block for the branch on line 262.(Û²Æˆûÿÿÿÿ8 ðÜ¶0
+R	java:S125…"<This block of commented-out lines of code should be removed.(«üÍ
+W	java:S125’"<This block of commented-out lines of code should be removed.(Û²Æˆûÿÿÿÿ
+W	java:S125ñ"<This block of commented-out lines of code should be removed.(¡ÖŒ®ûÿÿÿÿ
+W	java:S125Š"<This block of commented-out lines of code should be removed.(õ£öùúÿÿÿÿ
+?
+java:S1068Y")Remove this unused "myVar" private field.(üÜ‹Æ
+K
+java:S1144¸"4Remove this unused private "closeSerialPort" method.(˜²—

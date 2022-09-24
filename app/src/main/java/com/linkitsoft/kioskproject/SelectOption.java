@@ -64,6 +64,7 @@ public class SelectOption extends AppCompatActivity {
     TextView prc2;
     TextView lbl1;
     TextView lbl2;
+    TextView logs;
     EditText code;
     TabLayout tablayout;
     /* private RecyclerView recyclerView;
@@ -234,6 +235,7 @@ public class SelectOption extends AppCompatActivity {
         proceed = findViewById(R.id.button8);
         tablayout = findViewById(R.id.tabLayoutSelection);
         code = findViewById(R.id.editTextTextPersonName);
+        logs = findViewById(R.id.logs);
         serialCom = SerialCom.getInstance();
         serialCom.setSlctOptn(this);
 
@@ -552,28 +554,30 @@ public class SelectOption extends AppCompatActivity {
 
     public void showcount(int c1, int c2, int m) {
 
-        try{
+        Toast.makeText(this, "Dispense counter, Counter 1 : " + c1 + " Counter 2 : " + c2, Toast.LENGTH_LONG).show();
 
-        if (c1 < 10) {
-        } else {
+        try{
+            if (c1 >= 10 && c2 >=10){
             serialCom.stopMotor(m);
             pDialog.setTitle("Dispensing Product");
             pDialog.show();
             thankyouScreen(0.0);
           //  updatetransection();
 
-          //  code.setText("Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2);
+
+                logs.setText("Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2);
+                Toast.makeText(this, "Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2, Toast.LENGTH_LONG).show();
         }
 
-        if (c2 < 10) {
-        } else {
-            serialCom.stopMotor(m);
-            pDialog.setTitle("Dispensing Product");
-            pDialog.show();
-            thankyouScreen(0.0);
-            //updatetransection();
-           // code.setText("Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2);
-        }
+//        if (c2 < 10) {
+//        } else {
+//            serialCom.stopMotor(m);
+//            pDialog.setTitle("Dispensing Product");
+//            pDialog.show();
+//            thankyouScreen(0.0);
+//            //updatetransection();
+//           // code.setText("Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2);
+//        }
 
        /* if(m==0)
         {

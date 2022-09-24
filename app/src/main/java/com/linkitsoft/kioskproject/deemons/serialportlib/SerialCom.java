@@ -149,22 +149,22 @@ public class SerialCom {
                                 // 10 01 01 00 01 - 2B
                                 // 10 01 01 01 00 - 2A
 
-                                System.out.println("Barla Previous Byte :" + ByteUtils.bytesToHexString(previousbArr));
-                                System.out.println("Barla current Byte :" + response);
+                                showToast("Barla Previous Byte :" + ByteUtils.bytesToHexString(previousbArr));
+                                showToast("Barla current Byte :" + response);
 
 
                                 if ((bArr[1] == 0x00)) {
                                     SerialCom.this.count1b += 1;
                                 }
-//                                    if ((bArr[2] == 0x00)) {
-//                                        SerialCom.this.count1a += 1;
-//                                    }
+                                    if ((bArr[2] == 0x00)) {
+                                        SerialCom.this.count1a += 1;
+                                    }
                                 if ((bArr[3] == 0x00)) {
                                     SerialCom.this.count2b += 1;
                                 }
-//                                    if ((bArr[4] == 0x00)) {
-//                                        SerialCom.this.count2a += 1;
-//                                    }
+                                    if ((bArr[4] == 0x00)) {
+                                        SerialCom.this.count2a += 1;
+                                    }
 
 
                                 showcount();
@@ -193,6 +193,16 @@ public class SerialCom {
                 } else {
                     SerialCom.this.selectoptn.showcount(SerialCom.this.count2a, SerialCom.this.count2b, SerialCom.this.m);
                 }
+
+            }
+        });
+    }
+
+    public void showToast(String message) {
+        SerialCom.this.selectoptn.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(selectoptn.getApplicationContext(),  message ,Toast.LENGTH_LONG).show();
+
 
             }
         });
@@ -254,6 +264,7 @@ public class SerialCom {
                         SerialCom.this.selectoptn.runOnUiThread(new Runnable() {
                             public void run() {
 
+                                showToast("myRun :Dispense time out motor stop");
                                 SerialCom.this.selectoptn.stopmotor(m, "Dispense time out.");
                                 SerialCom.this.selectoptn.timeout();
 
@@ -264,6 +275,7 @@ public class SerialCom {
                         stopMotor(SerialCom.this.m);
                         SerialCom.this.selectoptn.runOnUiThread(new Runnable() {
                             public void run() {
+                                showToast("myRun :Dispense time out motor stop");
 
                                 SerialCom.this.selectoptn.stopmotor(m, "Dispense time out.");
                                 SerialCom.this.selectoptn.timeout();
