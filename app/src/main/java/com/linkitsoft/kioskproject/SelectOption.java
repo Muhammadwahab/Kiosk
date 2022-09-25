@@ -19,6 +19,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -554,10 +555,12 @@ public class SelectOption extends AppCompatActivity {
 
     public void showcount(int c1, int c2, int m) {
 
+        Log.e("SelectOption","Dispense counter, Counter 1 : " + c1 + " Counter 2 : " + c2);
+
         Toast.makeText(this, "Dispense counter, Counter 1 : " + c1 + " Counter 2 : " + c2, Toast.LENGTH_LONG).show();
 
         try{
-            if (c1 >= 10 && c2 >=10){
+            if (c1 >= 10 || c2 >=10){
             serialCom.stopMotor(m);
             pDialog.setTitle("Dispensing Product");
             pDialog.show();

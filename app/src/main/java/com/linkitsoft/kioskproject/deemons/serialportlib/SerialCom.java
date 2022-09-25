@@ -122,8 +122,9 @@ public class SerialCom {
                     try {
                         byte[] bArr = new byte[5];
 
+                        Log.e("SerialComLoop","run checking");
                         if (SerialCom.this.port.read(bArr, timeOut) > 0) {
-
+                            Log.e("SerialComLooptrue","run checking");
 
                             String response = ByteUtils.bytesToHexString(bArr);
 
@@ -149,8 +150,8 @@ public class SerialCom {
                                 // 10 01 01 00 01 - 2B
                                 // 10 01 01 01 00 - 2A
 
-                                showToast("Barla Previous Byte :" + ByteUtils.bytesToHexString(previousbArr));
-                                showToast("Barla current Byte :" + response);
+//                                showToast("Barla Previous Byte :" + ByteUtils.bytesToHexString(previousbArr));
+//                                showToast("Barla current Byte :" + response);
 
 
                                 if ((bArr[1] == 0x00)) {
@@ -165,6 +166,10 @@ public class SerialCom {
                                     if ((bArr[4] == 0x00)) {
                                         SerialCom.this.count2a += 1;
                                     }
+                                Log.e("SerialComLoop"," SerialCom.this.count1b "+ SerialCom.this.count1b);
+                                Log.e("SerialComLoop"," SerialCom.this.count1a "+ SerialCom.this.count1a);
+                                Log.e("SerialComLoop"," SerialCom.this.count2b "+ SerialCom.this.count2b);
+                                Log.e("SerialComLoop"," SerialCom.this.count2a "+ SerialCom.this.count2a);
 
 
                                 showcount();
@@ -300,7 +305,7 @@ public class SerialCom {
             startreading();
 
 
-            handler.postDelayed(myrn, 30000);
+            handler.postDelayed(myrn, 15000);
 
         }
     }
