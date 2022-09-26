@@ -65,6 +65,7 @@ public class SerialCom {
 
     SelectOption selectoptn;
     MainActivity mainActivity;
+     public UsbDeviceConnection connection;
 
     public void setSlctOptn(SelectOption selectoptn) {
         SerialCom.this.selectoptn = selectoptn;
@@ -360,7 +361,7 @@ public class SerialCom {
                         UsbSerialDriver driver = availableDrivers.get(0);
                         PendingIntent usbPermissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(INTENT_ACTION_GRANT_USB), 0);
                         manager.requestPermission(driver.getDevice(), usbPermissionIntent);
-                        UsbDeviceConnection connection = manager.openDevice(driver.getDevice());
+                         connection = manager.openDevice(driver.getDevice());
                         if (connection == null) {
                             showtoast();
                             hidealert();

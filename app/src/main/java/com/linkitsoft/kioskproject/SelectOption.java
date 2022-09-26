@@ -113,7 +113,7 @@ public class SelectOption extends AppCompatActivity {
             while (!threadintrupt){
 
                 try {
-                    Thread.sleep(90000);
+                    Thread.sleep(45000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -124,7 +124,7 @@ public class SelectOption extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            ct[0] =  new CountDownTimer(60000, 1000) {
+                            ct[0] =  new CountDownTimer(1000, 1000) {
                                 public void onTick(long millisUntilFinished) {
 
                                     if(!isuserpaying){
@@ -236,7 +236,7 @@ public class SelectOption extends AppCompatActivity {
         proceed = findViewById(R.id.button8);
         tablayout = findViewById(R.id.tabLayoutSelection);
         code = findViewById(R.id.editTextTextPersonName);
-        logs = findViewById(R.id.logs);
+       // logs = findViewById(R.id.logs);
         serialCom = SerialCom.getInstance();
         serialCom.setSlctOptn(this);
 
@@ -266,7 +266,22 @@ public class SelectOption extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Toast.makeText(getApplicationContext(),"selected is "+tablayout.getSelectedTabPosition(),Toast.LENGTH_LONG).show();
+               if (!checkConnectionBeforeDispence()){
+                   pDialog = new SweetAlertDialog(SelectOption.this, SweetAlertDialog.PROGRESS_TYPE);
+                   pDialog.setTitle("Connection is not establish restarting kiosk");
+                   pDialog.setCanceledOnTouchOutside(false);
+                   pDialog.setNeutralButton(R.string.dialog_ok, new SweetAlertDialog.OnSweetClickListener() {
+                       @Override
+                       public void onClick(SweetAlertDialog sweetAlertDialog) {
+                           finish();
+                           Intent intent = new Intent(sweetAlertDialog.getContext(), Login.class);
+                           intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                           sweetAlertDialog.getContext().startActivity(intent);
+                       }
+                   });
+                   pDialog.show();
+                   return;
+               }
 
                 String result=tablayout.getSelectedTabPosition()==0?"1":"0";
 
@@ -327,6 +342,22 @@ public class SelectOption extends AppCompatActivity {
 
 
 
+    }
+
+    private Boolean checkConnectionBeforeDispence() {
+        try {
+            byte[] buf = new byte[2];
+            int len =  serialCom.connection.controlTransfer(0x80 /*DEVICE*/, 0 /*GET_STATUS*/, 0, 0, buf, buf.length, 200);
+            if(len < 0)
+            {
+                Log.e(SelectOption.class.getSimpleName(),"connection is not establish");
+            }else{
+                return true;
+            }
+        }catch (Exception exception){
+
+        }
+       return false;
     }
 
     private void checkprecode(String codee) {
@@ -557,7 +588,7 @@ public class SelectOption extends AppCompatActivity {
 
         Log.e("SelectOption","Dispense counter, Counter 1 : " + c1 + " Counter 2 : " + c2);
 
-        Toast.makeText(this, "Dispense counter, Counter 1 : " + c1 + " Counter 2 : " + c2, Toast.LENGTH_LONG).show();
+       // Toast.makeText(this, "Dispense counter, Counter 1 : " + c1 + " Counter 2 : " + c2, Toast.LENGTH_LONG).show();
 
         try{
             if (c1 >= 10 || c2 >=10){
@@ -568,8 +599,8 @@ public class SelectOption extends AppCompatActivity {
           //  updatetransection();
 
 
-                logs.setText("Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2);
-                Toast.makeText(this, "Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2, Toast.LENGTH_LONG).show();
+               // logs.setText("Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2);
+                //Toast.makeText(this, "Dispense Completed, Counter 1 : " + c1 + " Counter 2 : " + c2, Toast.LENGTH_LONG).show();
         }
 
 //        if (c2 < 10) {

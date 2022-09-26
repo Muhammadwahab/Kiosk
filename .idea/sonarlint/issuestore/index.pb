@@ -1,5 +1,19 @@
 
+@
+app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
+<
+build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
 o
-?app/src/main/java/com/linkitsoft/kioskproject/SelectOption.java,9/1/91dee792dc6c9c4abb30caf61ab31e9eabc23f4f
+?app/src/main/java/com/linkitsoft/kioskproject/Configration.java,a/e/aeafc1610af064367796b7e8bb59976befcc4293
+z
+Japp/src/main/java/com/linkitsoft/kioskproject/Utilites/PortNVeriables.java,2/3/234487f42e3b2decddb498fe80b20f3fd7904b83
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+s
+Capp/src/main/java/com/linkitsoft/kioskproject/kioskApplication.java,f/6/f6942a531d8c84c8d94d8def16ff328c57fa5723
+o
+?app/src/main/java/com/linkitsoft/kioskproject/MainActivity.java,6/b/6b77baf325f3776dc623ea6db6f8be6fff71f33e
 ‚
 Rapp/src/main/java/com/linkitsoft/kioskproject/deemons/serialportlib/SerialCom.java,2/3/230e25c31adc065c5f2bd7107e2ca8478857b0a7
+t
+Dapp/src/main/java/com/linkitsoft/kioskproject/ExceptionHandler2.java,a/6/a6b63bb40d69cf3bdc1190aa0880bf5f929793e8
