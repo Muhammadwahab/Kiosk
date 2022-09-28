@@ -273,6 +273,8 @@ public class SelectOption extends AppCompatActivity {
                    pDialog.setNeutralButton(R.string.dialog_ok, new SweetAlertDialog.OnSweetClickListener() {
                        @Override
                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                           closeAllConnection();
                            finish();
                            Intent intent = new Intent(sweetAlertDialog.getContext(), Login.class);
                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -344,7 +346,15 @@ public class SelectOption extends AppCompatActivity {
 
     }
 
+    private void closeAllConnection() {
+        try {
+            serialCom.port.close();
+        } catch (Exception e) {
+        }
+    }
+
     private Boolean checkConnectionBeforeDispence() {
+
         try {
             byte[] buf = new byte[2];
             int len =  serialCom.connection.controlTransfer(0x80 /*DEVICE*/, 0 /*GET_STATUS*/, 0, 0, buf, buf.length, 200);

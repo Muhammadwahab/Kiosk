@@ -11,9 +11,5 @@ P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 s
 Capp/src/main/java/com/linkitsoft/kioskproject/kioskApplication.java,f/6/f6942a531d8c84c8d94d8def16ff328c57fa5723
-o
-?app/src/main/java/com/linkitsoft/kioskproject/MainActivity.java,6/b/6b77baf325f3776dc623ea6db6f8be6fff71f33e
-‚
-Rapp/src/main/java/com/linkitsoft/kioskproject/deemons/serialportlib/SerialCom.java,2/3/230e25c31adc065c5f2bd7107e2ca8478857b0a7
 t
 Dapp/src/main/java/com/linkitsoft/kioskproject/ExceptionHandler2.java,a/6/a6b63bb40d69cf3bdc1190aa0880bf5f929793e8

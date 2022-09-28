@@ -34,7 +34,7 @@ public class SerialCom {
     private boolean activated;
     private boolean motorRunning = false;
     private ReadThread mReadThread;
-    UsbSerialPort port;
+    public UsbSerialPort port;
 
     byte m = 0x00;
     int amount = 0;
@@ -127,7 +127,7 @@ public class SerialCom {
                         if (SerialCom.this.port.read(bArr, timeOut) > 0) {
                             Log.e("SerialComLooptrue","run checking");
 
-                            String response = ByteUtils.bytesToHexString(bArr);
+                          //  String response = ByteUtils.bytesToHexString(bArr);
 
                             if (bArr[0] == 0x10 && SerialCom.this.motorRunning) {
 
