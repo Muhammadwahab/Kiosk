@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -139,6 +141,12 @@ public class MainActivity extends AppCompatActivity {
             if (email.getText().toString().isEmpty()){
                 textInputLayout.setError("Please enter email address prefix only");
             }
+            else if (email.getText().toString().length()>20){
+                textInputLayout.setError("email prefix not greater then 20");
+            }
+            else if (!isValidEmail(email.getText().toString()+textInputLayout.getSuffixText())){
+                textInputLayout.setError("invalid email prefix");
+            }
             else
             {
                 textInputLayout.setErrorEnabled(false);
@@ -167,6 +175,10 @@ public class MainActivity extends AppCompatActivity {
 
         alertDialog.setView(view);
         alertDialog.show();
+    }
+
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 
 }
