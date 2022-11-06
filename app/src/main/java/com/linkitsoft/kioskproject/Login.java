@@ -1,8 +1,11 @@
 package com.linkitsoft.kioskproject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -12,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -20,6 +24,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.linkitsoft.kioskproject.Model.ProductModel;
@@ -28,6 +36,10 @@ import com.linkitsoft.kioskproject.Utilites.PortNVeriables;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -35,8 +47,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class Login extends AppCompatActivity {
 
     Button nextbtn;
-    EditText username;
-    EditText password;
+//    EditText username;
+//    EditText password;
     String kioskid;
 
     private PortNVeriables portsandVeriables;
@@ -51,6 +63,11 @@ public class Login extends AppCompatActivity {
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
 
+    private String filename = "SampleFile.txt";
+    private String filepath = "MyFileStorage";
+    File myExternalFile;
+    String myData = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +76,15 @@ public class Login extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(flags);
 
         nextbtn = findViewById(R.id.button3);
-        username = findViewById(R.id.editTextTextPersonName3);
-        password = findViewById(R.id.editTextTextPersonName2);
+///        username = findViewById(R.id.editTextTextPersonName3);
+      //  password = findViewById(R.id.editTextTextPersonName2);
 
         portsandVeriables = new PortNVeriables();
 
         sharedpreferences = getSharedPreferences("MyPrefs", 0);
 
         kioskid = sharedpreferences.getString("kid","0");
+
         assert kioskid != null;
         if(!kioskid.equals("0")){
             Intent main = new Intent(Login.this, MainActivity.class);
@@ -88,33 +106,89 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!username.getText().toString().isEmpty() && !password.getText().toString().isEmpty())
-                {
-                    if(!chkinternet()){
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("kid", String.valueOf(123));
+                editor.apply();
 
-                        new SweetAlertDialog(Login.this,SweetAlertDialog.WARNING_TYPE)
-                                .setTitleText("No internet")
-                                .setContentText("Please check your internet connection")
-                                .show();
-                    }
-                    else {
+                Intent optinpag = new Intent(Login.this, MainActivity.class);
+                startActivity(optinpag);
+                finish();
+//
+//                if(!username.getText().toString().isEmpty() && !password.getText().toString().isEmpty())
+//                {
+//                    if(!chkinternet()){
+//
+//                        new SweetAlertDialog(Login.this,SweetAlertDialog.WARNING_TYPE)
+//                                .setTitleText("No internet")
+//                                .setContentText("Please check your internet connection")
+//                                .show();
+//                    }
+//                    else {
+//
+//                        nextbtn.setEnabled(false);
+//                        pDialog = new SweetAlertDialog(Login.this, SweetAlertDialog.PROGRESS_TYPE);
+//                        pDialog.setTitle("Processing");
+//                        pDialog.show();
+//                        getkioskdetails(username.getText().toString(),password.getText().toString());
+//                    }
+//                }
+//
+//                else
+//                {
+//                    new SweetAlertDialog(Login.this,SweetAlertDialog.ERROR_TYPE).setTitleText("Must fill both field").show();
+//                }
 
-                        nextbtn.setEnabled(false);
-                        pDialog = new SweetAlertDialog(Login.this, SweetAlertDialog.PROGRESS_TYPE);
-                        pDialog.setTitle("Processing");
-                        pDialog.show();
-                        getkioskdetails(username.getText().toString(),password.getText().toString());
-                    }
-                }
 
-                else
-                {
-                    new SweetAlertDialog(Login.this,SweetAlertDialog.ERROR_TYPE).setTitleText("Must fill both field").show();
-                }
             }
         });
 
 
+        //  emailDialogContent();
+
+
+    }
+
+    private void emailDialogContent() {
+        final View view = getLayoutInflater().inflate(R.layout.vallidation_dailog, null);
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Email Validation");
+        alertDialog.setCancelable(false);
+
+
+        final TextInputEditText email = (TextInputEditText) view.findViewById(R.id.textInputedittext);
+        final TextInputLayout textInputLayout = (TextInputLayout) view.findViewById(R.id.textInputedLayout);
+        final AppCompatButton submitButton = (AppCompatButton) view.findViewById(R.id.submitButton);
+        email.requestFocus();
+
+        submitButton.setOnClickListener(v -> {
+            if (email.getText().toString().isEmpty()){
+                textInputLayout.setError("Please enter email address prefix only");
+            }
+            else
+            {
+                textInputLayout.setErrorEnabled(false);
+
+                String filename = "kioskEmail.txt";
+                String fileContents = "\n"+email.getText().toString()+textInputLayout.getSuffixText().toString();
+                myExternalFile = new File(getExternalFilesDir(filepath), filename);
+
+                try {
+                    FileOutputStream fileOutputStream=new FileOutputStream(myExternalFile,true);
+                    fileOutputStream.write(fileContents.getBytes());
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),"exception "+e.getMessage(),Toast.LENGTH_LONG).show();
+
+                }
+
+
+
+            }
+
+        });
+
+
+        alertDialog.setView(view);
+        alertDialog.show();
     }
 
     private void getkioskdetails(String uname, String pass) {
@@ -135,6 +209,8 @@ public class Login extends AppCompatActivity {
                     result = response.getInt("status");
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().recordException(e);
+
                 }
                 if(result == 1){
 
@@ -144,7 +220,7 @@ public class Login extends AppCompatActivity {
                     try {
                         kid = response.getInt("kid");
                         SharedPreferences.Editor editor = sharedpreferences.edit();
-                        editor.putString("kid", String.valueOf(kid));
+                        editor.putString("kid", String.valueOf(123));
                         editor.apply();
 
                         Intent optinpag = new Intent(Login.this, MainActivity.class);
@@ -153,6 +229,8 @@ public class Login extends AppCompatActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        FirebaseCrashlytics.getInstance().recordException(e);
+
                     }
                 }
                 nextbtn.setEnabled(true);

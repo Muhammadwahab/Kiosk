@@ -41,6 +41,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.linkitsoft.kioskproject.Model.TransactionModel;
 import com.linkitsoft.kioskproject.Utilites.PortNVeriables;
@@ -75,7 +76,9 @@ public class SelectOption extends AppCompatActivity {
     Button startMotor2;
     Button stopMotor1;
     Button stopMotor2;
-    Button proceed;
+    ImageView proceed;
+    ImageView scented;
+    ImageView unScented;
 
     SweetAlertDialog progressbar;
     SweetAlertDialog sweetAlertDialog;
@@ -88,6 +91,7 @@ public class SelectOption extends AppCompatActivity {
     String type;
     String csid;
     String precode;
+    String selected="";
 
     final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -116,6 +120,8 @@ public class SelectOption extends AppCompatActivity {
                     Thread.sleep(45000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().recordException(e);
+
                 }
 
                 final CountDownTimer[] ct = new CountDownTimer[1];
@@ -134,6 +140,8 @@ public class SelectOption extends AppCompatActivity {
                                         try {
                                             sweetAlertDialog.dismissWithAnimation();
                                         } catch (Exception ex) {
+                                            FirebaseCrashlytics.getInstance().recordException(ex);
+
                                         }
                                         finish();
                                         ct[0].cancel();
@@ -145,6 +153,8 @@ public class SelectOption extends AppCompatActivity {
                                     try {
                                         sweetAlertDialog.dismissWithAnimation();
                                     } catch (Exception ex) {
+                                        FirebaseCrashlytics.getInstance().recordException(ex);
+
                                     }
                                     threadintrupt= true;
                                     ct[0].cancel();
@@ -159,6 +169,8 @@ public class SelectOption extends AppCompatActivity {
 
                         } catch (Exception e) {
                             e.printStackTrace();
+                            FirebaseCrashlytics.getInstance().recordException(e);
+
                         }}
                 });
 
@@ -221,7 +233,10 @@ public class SelectOption extends AppCompatActivity {
         try {
             sweetAlertDialog.show();
         }
-        catch (Exception ex){}
+        catch (Exception ex){
+            FirebaseCrashlytics.getInstance().recordException(ex);
+
+        }
 
     }
 
@@ -234,6 +249,8 @@ public class SelectOption extends AppCompatActivity {
 
         logo = findViewById(R.id.imageView2);
         proceed = findViewById(R.id.button8);
+        scented = findViewById(R.id.scented);
+        unScented = findViewById(R.id.unScented);
         tablayout = findViewById(R.id.tabLayoutSelection);
         code = findViewById(R.id.editTextTextPersonName);
        // logs = findViewById(R.id.logs);
@@ -252,6 +269,29 @@ public class SelectOption extends AppCompatActivity {
         oncreate= true;
 
 
+
+        scented.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scented.setImageResource(R.drawable.scented_selected);
+                unScented.setImageResource(R.drawable.unscened_neutral);
+                proceed.setImageResource(R.drawable.dispence_button);
+
+                selected="1";
+
+            }
+        });
+
+        unScented.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                unScented.setImageResource(R.drawable.unscented_selected);
+                scented.setImageResource(R.drawable.scented_neutral);
+                proceed.setImageResource(R.drawable.dispence_button);
+                selected="0";
+
+            }
+        });
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -264,6 +304,12 @@ public class SelectOption extends AppCompatActivity {
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (selected.isEmpty()){
+                    Toast.makeText(getApplicationContext(),"Please select dispense option ",Toast.LENGTH_LONG).show();
+
+                    return;
+                }
 
 
                if (!checkConnectionBeforeDispence()){
@@ -285,7 +331,7 @@ public class SelectOption extends AppCompatActivity {
                    return;
                }
 
-                String result=tablayout.getSelectedTabPosition()==0?"1":"0";
+                String result=selected;
 
 
                 try {
@@ -295,44 +341,13 @@ public class SelectOption extends AppCompatActivity {
                     pDialog.setCanceledOnTouchOutside(false);
                     pDialog.show();
                 }catch (Exception ex){
+                    FirebaseCrashlytics.getInstance().recordException(ex);
 
                 }
                 isuserpaying = true;
 
                 dispense(result);
-//
-//                if(!code.getText().toString().isEmpty())
-//                {
-//                    if(!chkinternet()){
-//
-//                        new SweetAlertDialog(SelectOption.this,SweetAlertDialog.WARNING_TYPE)
-//                                .setTitleText("No internet")
-//                                .setContentText("Please check your internet connection")
-//                                .show();
-//                    }
-//                    else {
-//
-//                      try {
-//                          proceed.setEnabled(false);
-//                          pDialog = new SweetAlertDialog(SelectOption.this, SweetAlertDialog.PROGRESS_TYPE);
-//                          pDialog.setTitle("Processing");
-//                          pDialog.setCanceledOnTouchOutside(false);
-//                          pDialog.show();
-//                      }catch (Exception ex){
-//
-//                      }
-//                        isuserpaying = true;
-//
-//                        checkprecode(code.getText().toString());
-//
-//
-//                    }
-//                }
-//
-//                else
-//                {
-//                    new SweetAlertDialog(SelectOption.this,SweetAlertDialog.ERROR_TYPE).setTitleText("Must fill both field").show();
-//                }
+
             }
         });
 
@@ -350,6 +365,8 @@ public class SelectOption extends AppCompatActivity {
         try {
             serialCom.port.close();
         } catch (Exception e) {
+            FirebaseCrashlytics.getInstance().recordException(e);
+
         }
     }
 
@@ -357,7 +374,7 @@ public class SelectOption extends AppCompatActivity {
 
         try {
             byte[] buf = new byte[2];
-            int len =  serialCom.connection.controlTransfer(0x80 /*DEVICE*/, 0 /*GET_STATUS*/, 0, 0, buf, buf.length, 200);
+            int len =  serialCom.connection.controlTransfer(0x80 /*DEVICE*/, 0 /*GET_STATUS*/, 0, 0, buf, buf.length, 500);
             if(len < 0)
             {
                 Log.e(SelectOption.class.getSimpleName(),"connection is not establish");
@@ -365,6 +382,7 @@ public class SelectOption extends AppCompatActivity {
                 return true;
             }
         }catch (Exception exception){
+            FirebaseCrashlytics.getInstance().recordException(exception);
 
         }
        return false;
@@ -392,6 +410,8 @@ public class SelectOption extends AppCompatActivity {
                     result = response.getInt("status");
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().recordException(e);
+
                 }
 
                 if(result == 1){
@@ -423,6 +443,8 @@ public class SelectOption extends AppCompatActivity {
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        FirebaseCrashlytics.getInstance().recordException(e);
+
 
                     }
 
@@ -454,6 +476,8 @@ public class SelectOption extends AppCompatActivity {
                 serialCom.startMotor(0);
             } catch (Exception e) {
                 e.printStackTrace();
+                FirebaseCrashlytics.getInstance().recordException(e);
+
             }
         }
         else {
@@ -488,6 +512,8 @@ public class SelectOption extends AppCompatActivity {
                 jsonParam = new JSONObject(new Gson().toJson(transactionModel));
             } catch (JSONException e) {
                 e.printStackTrace();
+                FirebaseCrashlytics.getInstance().recordException(e);
+
             }
 
             final JSONObject requestBody = jsonParam;
@@ -519,6 +545,8 @@ public class SelectOption extends AppCompatActivity {
                         System.out.println("FIX Error" + e);
                         pDialog.dismissWithAnimation();
                         e.printStackTrace();
+                        FirebaseCrashlytics.getInstance().recordException(e);
+
                     }
 
                 }
@@ -636,7 +664,9 @@ public class SelectOption extends AppCompatActivity {
       //  code.setText(/*(m==0?"Motor 1":"Motor 2")+*/" Counter 1 : " + c1 + " Counter 2 : " + c2);
  }catch (Exception ex){
      ex.printStackTrace();
- }
+            FirebaseCrashlytics.getInstance().recordException(ex);
+
+        }
     }
 
 
@@ -722,6 +752,8 @@ public class SelectOption extends AppCompatActivity {
                     v.setEnabled(false);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().recordException(e);
+
                 }
             }
         });
@@ -736,6 +768,8 @@ public class SelectOption extends AppCompatActivity {
                     v.setEnabled(false);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().recordException(e);
+
                 }
             }
         });
@@ -747,6 +781,8 @@ public class SelectOption extends AppCompatActivity {
                     stopmotor(0,"Dispense Canceled");
                 } catch (Exception e) {
                     e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().recordException(e);
+
                 }
 
             }
@@ -759,6 +795,8 @@ public class SelectOption extends AppCompatActivity {
                     stopmotor(1,"Dispense Canceled");
                 } catch (Exception e) {
                     e.printStackTrace();
+                    FirebaseCrashlytics.getInstance().recordException(e);
+
                 }
 
             }
@@ -770,7 +808,10 @@ public class SelectOption extends AppCompatActivity {
       try{
           pDialog.dismissWithAnimation();
       }
-      catch (Exception ex){}
+      catch (Exception ex){
+          FirebaseCrashlytics.getInstance().recordException(ex);
+
+      }
         isuserpaying = false;
         threadintrupt = true;
         proceed.setEnabled(true);
@@ -824,7 +865,10 @@ public class SelectOption extends AppCompatActivity {
                   sendBroadcast(broadcastIntent);
               }
           }
-          catch (Exception ex){}
+          catch (Exception ex){
+              FirebaseCrashlytics.getInstance().recordException(ex);
+
+          }
         }
 
     }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">KioskProject</string>
+    <string name="suffixText">gmail.com</string>
 </resources>

@@ -9,15 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.linkitsoft.kioskproject.MainActivity;
 import com.linkitsoft.kioskproject.Model.SliderItem;
 import com.linkitsoft.kioskproject.R;
-import com.linkitsoft.kioskproject.Recycler.SliderAdapterExample.SliderAdapterVH;
 import com.linkitsoft.kioskproject.SelectOption;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +23,17 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class SliderAdapterExample extends
         SliderViewAdapter<SliderAdapterExample.SliderAdapterVH> {
 
+
+    private SliderClickHandler sliderClickHandler;
+
     private Context context;
     private List<SliderItem> mSliderItems = new ArrayList<>();
     SharedPreferences sharedpreferences;
     String kioskid;
 
-    public SliderAdapterExample(Context context) {
+    public SliderAdapterExample(Context context, SliderClickHandler sliderClickHandler) {
         this.context = context;
+        this.sliderClickHandler=sliderClickHandler;
     }
 
     public void renewItems(List<SliderItem> sliderItems) {
@@ -61,24 +62,7 @@ public class SliderAdapterExample extends
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(kioskid.equals("0")){
-                    final SweetAlertDialog sd =  new SweetAlertDialog(context,SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Not Registered")
-                            .setContentText("Kindly register the kiosk");
-                    sd.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-
-                        }
-                    });
-                    sd.show();
-                }
-                else {
-                    Intent optinpage = new Intent(context, SelectOption.class);
-                    context.startActivity(optinpage);
-
-                }
+                sliderClickHandler.onClick();
             }
         });
     }
@@ -107,23 +91,14 @@ public class SliderAdapterExample extends
 
 
             if(url == "img0")
-            Picasso.get().load(R.drawable.img0).into(imageViewBackground);
+            Picasso.get().load(R.drawable.slider_1).into(imageViewBackground);
 
             if(url == "img1")
-            Picasso.get().load(R.drawable.img1).into(imageViewBackground);
+            Picasso.get().load(R.drawable.slider_2).into(imageViewBackground);
 
             if(url == "img2")
-            Picasso.get().load(R.drawable.img2).into(imageViewBackground);
+            Picasso.get().load(R.drawable.slider_3).into(imageViewBackground);
 
-            if(url == "img3")
-            Picasso.get().load(R.drawable.img3).into(imageViewBackground);
-
-            if(url == "img4")
-            Picasso.get().load(R.drawable.img4).into(imageViewBackground);
-            if(url == "img5")
-            Picasso.get().load(R.drawable.img5).into(imageViewBackground);
-            if(url == "img6")
-            Picasso.get().load(R.drawable.img6).into(imageViewBackground);
            /* if(url == "img4")
             Picasso.get().load(R.drawable.img5).into(imageViewBackground);
             if(url == "img5")
@@ -137,3 +112,4 @@ public class SliderAdapterExample extends
     }
 
 }
+

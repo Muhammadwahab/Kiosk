@@ -6,6 +6,8 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+
 public class ExceptionHandler2 implements Thread.UncaughtExceptionHandler {
     private Context context;
 
@@ -15,6 +17,8 @@ public class ExceptionHandler2 implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
+
+        FirebaseCrashlytics.getInstance().recordException(e);
         Intent intent = new Intent(context, Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);

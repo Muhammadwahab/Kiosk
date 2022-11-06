@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "582203127960",
+    "project_id": "kiosk-machine",
+    "storage_bucket": "kiosk-machine.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582203127960:android:11081b4bf785eb0df7f8ed",
+        "android_client_info": {
+          "package_name": "com.linkitsoft.kioskproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582203127960-3r46planocdl235275s2v18qoumjujgb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCKrAuacnXnw62OrlaE5NLvRVVJ0zeKMo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582203127960-3r46planocdl235275s2v18qoumjujgb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

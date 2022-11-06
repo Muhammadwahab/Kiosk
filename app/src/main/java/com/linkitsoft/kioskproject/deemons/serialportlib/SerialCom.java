@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
@@ -183,6 +184,7 @@ public class SerialCom {
 
                     } catch (Exception e) {
                         e.printStackTrace();
+                        FirebaseCrashlytics.getInstance().recordException(e);
                         return;
                     }
                 }
@@ -243,6 +245,8 @@ public class SerialCom {
 
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
+                                FirebaseCrashlytics.getInstance().recordException(e);
+
                             }
                         }
                     };
@@ -251,6 +255,8 @@ public class SerialCom {
 
             } catch (Exception e) {
                 e.printStackTrace();
+                FirebaseCrashlytics.getInstance().recordException(e);
+
             }
         } else {
             Log.e("SerialCom", "invalid param while dispense");
@@ -334,6 +340,8 @@ public class SerialCom {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            FirebaseCrashlytics.getInstance().recordException(e);
+
         }
     }
 
@@ -380,6 +388,8 @@ public class SerialCom {
 
                     } catch (Exception e) {
                         e.printStackTrace();
+                        FirebaseCrashlytics.getInstance().recordException(e);
+
                     }
                 }
             };
@@ -388,6 +398,8 @@ public class SerialCom {
 
         } catch (Exception e) {
             Toast.makeText(context, "Machine connection failed " + e.toString(), Toast.LENGTH_LONG).show();
+            FirebaseCrashlytics.getInstance().recordException(e);
+
         }
     }
 
@@ -419,20 +431,22 @@ public class SerialCom {
             public void run() {
 
                 try {
-                    alertDialog = new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Connection Failed")
-                            .setContentText("Could not connect to the machine, which means the kiosk will be unable to dispense.")
-                            .setConfirmButton("Retry", new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    sweetAlertDialog.dismissWithAnimation();
-                                    openport();
-                                }
-                            });
-                    alertDialog.setCanceledOnTouchOutside(false);
-                    alertDialog.show();
+//                    alertDialog = new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
+//                            .setTitleText("Connection Failed")
+//                            .setContentText("Could not connect to the machine, which means the kiosk will be unable to dispense.")
+//                            .setConfirmButton("Retry", new SweetAlertDialog.OnSweetClickListener() {
+//                                @Override
+//                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                    sweetAlertDialog.dismissWithAnimation();
+//                                    openport();
+//                                }
+//                            });
+//                    alertDialog.setCanceledOnTouchOutside(false);
+//                    alertDialog.show();
                 } catch (Exception ex) {
                     ex.printStackTrace();
+                    FirebaseCrashlytics.getInstance().recordException(ex);
+
                 }
             }
         });
