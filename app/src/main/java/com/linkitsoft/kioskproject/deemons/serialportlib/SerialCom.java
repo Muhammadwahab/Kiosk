@@ -431,18 +431,18 @@ public class SerialCom {
             public void run() {
 
                 try {
-//                    alertDialog = new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
-//                            .setTitleText("Connection Failed")
-//                            .setContentText("Could not connect to the machine, which means the kiosk will be unable to dispense.")
-//                            .setConfirmButton("Retry", new SweetAlertDialog.OnSweetClickListener() {
-//                                @Override
-//                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-//                                    sweetAlertDialog.dismissWithAnimation();
-//                                    openport();
-//                                }
-//                            });
-//                    alertDialog.setCanceledOnTouchOutside(false);
-//                    alertDialog.show();
+                    alertDialog = new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
+                            .setTitleText("Connection Failed")
+                            .setContentText("Could not connect to the machine, which means the kiosk will be unable to dispense.")
+                            .setConfirmButton("Retry", new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    sweetAlertDialog.dismissWithAnimation();
+                                    openport();
+                                }
+                            });
+                    alertDialog.setCanceledOnTouchOutside(false);
+                    alertDialog.show();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     FirebaseCrashlytics.getInstance().recordException(ex);

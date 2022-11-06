@@ -141,16 +141,18 @@ public class MainActivity extends AppCompatActivity {
             if (email.getText().toString().isEmpty()){
                 textInputLayout.setError("Please enter email address prefix only");
             }
-            else if (email.getText().toString().length()>20){
-                textInputLayout.setError("email prefix not greater then 20");
+            else if (email.getText().toString().length()<3){
+                textInputLayout.setError("email prefix must be  greater then 3 digits");
             }
-            else if (!isValidEmail(email.getText().toString()+textInputLayout.getSuffixText())){
-                textInputLayout.setError("invalid email prefix");
+            else if (email.getText().toString().length()>8){
+                textInputLayout.setError("email prefix must not be  greater then 8 digits");
+            }
+            else if (!isValidEmail(email.getText().toString())){
+                textInputLayout.setError("invalid email prefix only contain lower case letter and digits");
             }
             else
             {
                 textInputLayout.setErrorEnabled(false);
-
                 String filename = "kioskEmail.txt";
                 String fileContents = "\n"+email.getText().toString()+textInputLayout.getSuffixText().toString();
                 myExternalFile = new File(getExternalFilesDir(filepath), filename);
@@ -177,8 +179,8 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public static boolean isValidEmail(CharSequence target) {
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    public static boolean isValidEmail(String target) {
+        return target.matches("^[a-z0-9]*");
     }
 
 }

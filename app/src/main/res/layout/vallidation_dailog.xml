@@ -20,7 +20,7 @@
         android:focusable="true"
         app:endIconMode="clear_text"
         android:focusedByDefault="true"
-        app:suffixText="\@emerson.edu"
+        app:suffixText="\@williams.edu"
         app:suffixTextColor="@color/black">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputedittext"
