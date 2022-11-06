@@ -114,10 +114,10 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         }
         else {
-//                    Intent optinpage = new Intent(MainActivity.this, SelectOption.class);
-//                    startActivity(optinpage);
+                    Intent optinpage = new Intent(MainActivity.this, SelectOption.class);
+                    startActivity(optinpage);
 
-            emailDialogContent();
+          //  emailDialogContent();
         }
     }
 
