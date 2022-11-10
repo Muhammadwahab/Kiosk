@@ -316,7 +316,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="V2.11"
+        android:text="V3.0"
         android:textSize="14sp"
         android:visibility="visible"
         android:textColor="@color/black"
