@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
@@ -116,10 +118,10 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         }
         else {
-                    Intent optinpage = new Intent(MainActivity.this, SelectOption.class);
-                    startActivity(optinpage);
+//                    Intent optinpage = new Intent(MainActivity.this, SelectOption.class);
+//                    startActivity(optinpage);
 
-          //  emailDialogContent();
+            emailDialogContent();
         }
     }
 
@@ -137,6 +139,24 @@ public class MainActivity extends AppCompatActivity {
         final AppCompatButton submitButton = (AppCompatButton) view.findViewById(R.id.submitButton);
         email.requestFocus();
 
+
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                textInputLayout.setError("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         submitButton.setOnClickListener(v -> {
             if (email.getText().toString().isEmpty()){
                 textInputLayout.setError("Please enter email address prefix only");
@@ -148,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 textInputLayout.setError("email prefix must not be  greater then 8 digits");
             }
             else if (!isValidEmail(email.getText().toString())){
-                textInputLayout.setError("invalid email prefix only contain lower case letter and digits");
+                textInputLayout.setError("invalid email only contain lower case letter and digits");
             }
             else
             {
