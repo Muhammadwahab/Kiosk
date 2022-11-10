@@ -11,12 +11,12 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="32dp"
         android:elevation="1dp"
-        android:src="@drawable/touch_to_start"
-        android:textColor="#fff"
         android:scaleX="2"
         android:scaleY="2"
+        android:src="@drawable/touch_to_start"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,5 +44,15 @@
 
     </com.smarteist.autoimageslider.SliderView>
 
+
+    <ImageView
+        android:id="@+id/slider_bottom"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:src="@drawable/slider_bottom"
+        app:layout_constraintBottom_toBottomOf="@+id/imageSlider"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

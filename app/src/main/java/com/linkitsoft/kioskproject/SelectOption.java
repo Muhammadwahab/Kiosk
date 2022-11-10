@@ -68,7 +68,6 @@ public class SelectOption extends AppCompatActivity {
     TextView lbl2;
     TextView logs;
     EditText code;
-    TabLayout tablayout;
     /* private RecyclerView recyclerView;
      private List<ProductModel> productModelList;
      ProductRecycler productRecycler;*/
@@ -251,7 +250,6 @@ public class SelectOption extends AppCompatActivity {
         proceed = findViewById(R.id.button8);
         scented = findViewById(R.id.scented);
         unScented = findViewById(R.id.unScented);
-        tablayout = findViewById(R.id.tabLayoutSelection);
         code = findViewById(R.id.editTextTextPersonName);
        // logs = findViewById(R.id.logs);
         serialCom = SerialCom.getInstance();
@@ -306,7 +304,7 @@ public class SelectOption extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (selected.isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Please select dispense option ",Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(getApplicationContext(),"Please select dispense option ",Toast.LENGTH_LONG).show();
 
                     return;
                 }
