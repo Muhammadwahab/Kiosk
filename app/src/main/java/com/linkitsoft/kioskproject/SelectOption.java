@@ -294,7 +294,7 @@ public class SelectOption extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                openprogrsspopup();
+                //openprogrsspopup();
 
             }
         });
