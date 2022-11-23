@@ -18,16 +18,10 @@ import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.linkitsoft.kioskproject.MainActivity;
 import com.linkitsoft.kioskproject.SelectOption;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-
-import static android.content.ContentValues.TAG;
 
 public class SerialCom {
 

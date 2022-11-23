@@ -30,13 +30,4 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
-
-
-    <style name="RoundedTabLayoutStyle" parent="Widget.Design.TabLayout">
-        <item name="tabBackground">@drawable/tabs_selector</item>
-        <item name="tabIndicator">@null</item>
-        <item name="android:background">@drawable/tab_layout_bg</item>
-        <item name="tabSelectedTextColor">@color/white</item>
-        <item name="tabTextColor">@color/black</item>
-    </style>
 </resources>
