@@ -627,7 +627,7 @@ public class SelectOption extends AppCompatActivity {
        // Toast.makeText(this, "Dispense counter, Counter 1 : " + c1 + " Counter 2 : " + c2, Toast.LENGTH_LONG).show();
 
         try{
-            if (c1 >= 10 || c2 >=10){
+            if (c1 >= 6 || c2 >=6){
             serialCom.stopMotor(m);
             pDialog.setTitle("Dispensing Product");
             pDialog.show();
